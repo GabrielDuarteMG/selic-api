@@ -62,8 +62,8 @@ app.get("/selic-hash", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-app.listen(port, "192.168.193.143", () =>
-  console.log(`listening on http://192.168.193.143:${port}`)
+app.listen(port, "0.0.0.0", () =>
+  console.log(`listening on http://0.0.0.0:${port}`)
 );
 
 function hashSelicResponse(responseSelic) {
