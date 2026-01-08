@@ -40,7 +40,28 @@ app.get("/selic-status", async (req, res) => {
     });
   }
 });
-
+app.get("/selic-history", async (req, res) => {
+  try {
+    const response = await ky.get(API_1, { timeout: 10_000 }).json();
+    res.json(response);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+app.get("/selic-hash", async (req, res) => {
+  try {
+    const response = await ky.get(API_1, { timeout: 10_000 }).json();
+    const ultimas12TaxasSelic = response.conteudo
+      .sort(
+        (a, b) => new Date(b.DataReuniaoCopom) - new Date(a.DataReuniaoCopom)
+      )
+      .slice(0, 12);
+    const hash = hashSelicResponse(ultimas12TaxasSelic);
+    res.json({ hash });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 app.listen(port, () => console.log(`listening on :${port}`));
 
 function hashSelicResponse(responseSelic) {
