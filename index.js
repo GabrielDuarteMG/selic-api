@@ -62,6 +62,12 @@ app.get("/selic-hash", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+app.get("/", async (req, res) => {
+  res.json({
+    status: "ok",
+    message: "API is running",
+  });
+});
 app.listen(port, "0.0.0.0", () =>
   console.log(`listening on http://0.0.0.0:${port}`)
 );
